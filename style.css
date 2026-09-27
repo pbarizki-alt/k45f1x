@@ -1,0 +1,405 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #000000;
+    color: #ff0000;
+    padding-bottom: 30px;
+}
+
+header {
+    background: #000000;
+    color: rgb(255, 0, 0);
+    padding: 18px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+header p {
+    margin-top: 5px;
+    color: #ff0000;
+    font-size: 14px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 15px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 390px;
+    gap: 15px;
+    align-items: start;
+}
+
+.menu-area {
+    min-width: 0;
+}
+
+.order-area {
+    position: sticky;
+    top: 15px;
+    align-self: start;
+    min-width: 0;
+}
+
+.order-card {
+    max-height: calc(100vh - 30px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.order-list {
+    overflow-y: auto;
+    min-height: 80px;
+    max-height: 38vh;
+    padding-right: 3px;
+}
+
+.summary-card {
+    margin-top: 15px;
+}
+
+/* MENU */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.menu-button {
+    border: none;
+    background: #1f1f1f;
+    border: 2px solid #1f1f1f;
+    color: #ff0000;
+    border-radius: 12px;
+    padding: 15px 10px;
+    min-height: 85px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.menu-button:hover {
+    background: #111111;
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+.menu-button:hover .menu-name,
+.menu-button:hover .menu-price {
+    color: #ff0000;
+}
+
+.menu-button:active {
+    transform: scale(0.97);
+}
+
+.menu-name {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+}
+
+.menu-price {
+    color: #ff0000;
+    display: block;
+    margin-top: 7px;
+}
+
+/* PESANAN */
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ff0000;
+    padding: 10px 0;
+    gap: 10px;
+}
+
+.order-info {
+    flex: 1;
+}
+
+.order-name {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.order-price {
+    color: #ff0000;
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quantity button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    background: #ff0000;
+}
+
+.quantity span {
+    min-width: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.item-total {
+    min-width: 85px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.total-box {
+    margin-top: 15px;
+    border-top: 2px solid #ff0000;
+    padding-top: 15px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.grand-total {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* PEMBAYARAN */
+.payment {
+    margin-top: 15px;
+}
+
+.payment label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.payment input {
+    width: 100%;
+    padding: 13px;
+    border: 2px solid #ff0000;
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    font-size: 18px;
+    color: #ff0000;
+    caret-color: #ff0000;
+}
+
+.payment input::placeholder {
+    color: #666666;
+}
+
+.change {
+    margin-top: 12px;
+    padding: 15px;
+    background: #1f1f1f;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.change-value {
+    font-size: 20px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn {
+    border: none;
+    padding: 14px;
+    border-radius: 9px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-clear {
+    background: #1f1f1f;
+    color: #ff0000;
+}
+
+.btn-pay {
+    background: #1f1f1f;
+    color: rgb(255, 0, 0);
+}
+
+.empty {
+    text-align: center;
+    padding: 30px 10px;
+    color: #ff0000;
+}
+
+/* REKAP */
+.summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.summary-box {
+    background: #1f1f1f;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.summary-label {
+    color: #ff0000;
+    font-size: 13px;
+}
+
+.summary-value {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* HALAMAN UTAMA & FITUR LAIN */
+.home-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    background: #000000;
+}
+
+.home-overlay {
+    width: min(900px, 100%);
+    text-align: center;
+}
+
+.home-overlay h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    margin-bottom: 8px;
+}
+
+.home-overlay p {
+    font-size: 17px;
+    margin-bottom: 35px;
+}
+
+.home-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.home-button {
+    min-height: 190px;
+    border: 2px solid #ff0000;
+    border-radius: 20px;
+    background: #1f1f1f;
+    color: #ff0000;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    font-size: 22px;
+    font-weight: bold;
+    transition: .2s ease;
+}
+
+.home-button:hover {
+    background: #ff0000;
+    color: #000000;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 0, 0, .25);
+}
+
+.home-icon {
+    font-size: 64px;
+    line-height: 1;
+}
+
+.home-nav {
+    display: none;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 8px;
+    background: #000;
+    border-bottom: 1px solid #ff0000;
+}
+
+.home-nav-btn {
+    border: 1px solid #ff0000;
+    background: #1f1f1f;
+    color: #ff0000;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.feature-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background: #000;
+}
+
+.feature-card {
+    width: min(600px, 100%);
+    text-align: center;
+    background: #1f1f1f;
+    border: 2px solid #ff0000;
+    border-radius: 20px;
+    padding: 45px 25px;
+}
+
+.feature-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+}
+
+.feature-card h2 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.feature-card p {
+    margin-bottom: 25px;
+}
+
+.feature-back {
+    border: 1px solid #ff0000;
+    background: #000;
+    color: #ff0000;
+    padding: 12px 22px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: bold;
+}
