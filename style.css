@@ -403,3 +403,53 @@ header p {
     cursor: pointer;
     font-weight: bold;
 }
+
+/* ==================================================
+   TAMPILAN KHUSUS HP (MOBILE RESPONSIVE)
+   ================================================== */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    /* Ubah layout menjadi 1 kolom vertikal */
+    .layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Matikan sticky di HP agar pesanan tidak menutupi menu saat di-scroll */
+    .order-area {
+        position: static;
+        width: 100%;
+    }
+
+    /* Lepas pembatasan tinggi layar penuh */
+    .order-card {
+        max-height: none;
+    }
+
+    /* Atur tinggi maksimal daftar pesanan agar tidak terlalu panjang */
+    .order-list {
+        max-height: 220px;
+    }
+
+    /* Sesuaikan ukuran tombol menu untuk HP */
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .menu-button {
+        min-height: 70px;
+        padding: 10px 6px;
+    }
+
+    .menu-name {
+        font-size: 14px;
+    }
+
+    .menu-price {
+        font-size: 13px;
+    }
+}
