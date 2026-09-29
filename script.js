@@ -25,8 +25,12 @@ const drinks = [
     { name: "Es Jahesu", price: 7000 },
     { name: "Beng-beng", price: 5000 },
     { name: "Es Beng-beng", price: 6000 },
-    { name: "G.Day/Mix/Nut", price: 4000 },
-    { name: "Es G.Day/Mix/Nut", price: 5000 },
+    { name: "G.Day", price: 4000 },
+    { name: "Es G.Day", price: 5000 },
+    { name: "Mix", price: 4000 },
+    { name: "Es Mix", price: 5000 },
+    { name: "Nut", price: 4000 },
+    { name: "Es Nut", price: 5000 },
 ];
 
 /*

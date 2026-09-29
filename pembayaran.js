@@ -11,9 +11,11 @@ function rupiah(number) {
     }).format(number);
 }
 
+let activeEditOrderId = null;
+
 /*
 ==================================================
-TAMPILKAN LIST PESANAN PENDING
+TAMPILKAN LIST PESANAN PENDING (DENGAN TATA LETAK RAPI)
 ==================================================
 */
 function renderPendingOrders() {
@@ -43,49 +45,152 @@ function renderPendingOrders() {
         const card = document.createElement("div");
         card.className = "pending-card";
         card.innerHTML = `
-            <div>
-                <div class="pending-header">
-                    <span>🕒 ${order.date}</span>
-                    <span class="history-source ${sourceClass}">${order.source}</span>
-                </div>
+            <!-- HEADER TANGGAL & SUMBER -->
+            <div class="pending-header">
+                <span>🕒 ${order.date}</span>
+                <span class="history-source ${sourceClass}">${order.source}</span>
+            </div>
 
-                <div class="pending-items">
-                    ${itemsHTML}
-                </div>
+            <!-- DAFTAR ITEM PESANAN -->
+            <div class="pending-items">
+                ${itemsHTML}
+            </div>
 
+            <!-- OPSI TAMBAH MENU & RINGKASAN TOTAL -->
+            <div class="pending-action-row">
+                <button class="btn-add-item-order" onclick="openAddItemModal(${order.id})">➕ Tambah</button>
                 <div class="pending-total-row">
-                    <span>TOTAL</span>
+                    <span style="font-size: 12px; color: #aaa; font-weight: normal;">TOTAL: </span>
                     <span>${rupiah(order.total)}</span>
                 </div>
             </div>
 
-            <div>
-                <div class="pending-payment">
+            <!-- SECTION PEMBAYARAN -->
+            <div class="pending-payment">
+                <div class="pending-field">
                     <label for="payInput_${order.id}">Uang Pembeli</label>
                     <input type="number" id="payInput_${order.id}" placeholder="Contoh: 50000" oninput="calculatePendingChange(${order.id}, ${order.total})">
-                    
-                    <div class="pending-change-row">
-                        <span>Kembalian</span>
-                        <span id="changeVal_${order.id}">${rupiah(0)}</span>
-                    </div>
-
-                    <!-- DROPDOWN METODE PEMBAYARAN -->
-                    <div class="payment-method" style="margin-top: 10px; margin-bottom: 15px;">
-                        <label for="payMethod_${order.id}" style="display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px;">Metode Pembayaran</label>
-                        <select id="payMethod_${order.id}" style="width: 100%; padding: 10px; border: 1px solid #ff0000; background: #000; color: #ff0000; border-radius: 6px; font-size: 15px; cursor: pointer;">
-                            <option value="Cash" ${initialMethod === 'Cash' ? 'selected' : ''}>Cash</option>
-                            <option value="Dana" ${initialMethod === 'Dana' ? 'selected' : ''}>Dana</option>
-                        </select>
-                    </div>
+                </div>
+                
+                <div class="pending-change-row">
+                    <span>Kembalian</span>
+                    <span id="changeVal_${order.id}" style="color: #ff0000;">${rupiah(0)}</span>
                 </div>
 
-                <button class="btn-pay-pending" onclick="processPendingPayment(${order.id})">💰 Bayar Now / Lunas</button>
-                <button class="btn-cancel-pending" onclick="cancelPendingOrder(${order.id})">Batalkan Pesanan</button>
+                <div class="pending-field">
+                    <label for="payMethod_${order.id}">Metode Pembayaran</label>
+                    <select id="payMethod_${order.id}">
+                        <option value="Cash" ${initialMethod === 'Cash' ? 'selected' : ''}>Cash</option>
+                        <option value="Dana" ${initialMethod === 'Dana' ? 'selected' : ''}>Dana</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- TOMBOL AKSI -->
+            <div class="pending-buttons">
+                <button class="btn-pay-pending" onclick="processPendingPayment(${order.id})">💰</button>
+                <button class="btn-cancel-pending" onclick="cancelPendingOrder(${order.id})">Batalkan</button>
             </div>
         `;
 
         container.appendChild(card);
     });
+}
+
+/*
+==================================================
+FITUR TAMBAH ITEM KE PESANAN PENDING
+==================================================
+*/
+function openAddItemModal(orderId) {
+    activeEditOrderId = orderId;
+    const pendingOrders = JSON.parse(localStorage.getItem("angkringan_pending_orders")) || [];
+    const order = pendingOrders.find(o => o.id === orderId);
+
+    if (!order) return;
+
+    const select = document.getElementById("selectMenuItem");
+    select.innerHTML = `<option value="">-- Pilih Menu Tersedia --</option>`;
+
+    // Ambil daftar menu sesuai sumber pesanan (Kasir / Rokok) dari LocalStorage
+    const storageKey = order.source === "Rokok" ? "angkringan_rokok_menu" : "angkringan_menu";
+    const availableMenu = JSON.parse(localStorage.getItem(storageKey)) || [];
+
+    availableMenu.forEach((menuItem, idx) => {
+        const option = document.createElement("option");
+        option.value = idx;
+        option.innerText = `${menuItem.name} - ${rupiah(menuItem.price)}`;
+        option.dataset.name = menuItem.name;
+        option.dataset.price = menuItem.price;
+        select.appendChild(option);
+    });
+
+    const customOption = document.createElement("option");
+    customOption.value = "custom";
+    customOption.innerText = "+ Input Manual / Lainnya";
+    select.appendChild(customOption);
+
+    // Reset input
+    document.getElementById("inputItemName").value = "";
+    document.getElementById("inputItemPrice").value = "";
+    document.getElementById("inputItemQty").value = 1;
+
+    document.getElementById("addItemModal").style.display = "flex";
+}
+
+function onMenuItemSelect() {
+    const select = document.getElementById("selectMenuItem");
+    const selectedOption = select.options[select.selectedIndex];
+
+    if (select.value !== "" && select.value !== "custom") {
+        document.getElementById("inputItemName").value = selectedOption.dataset.name;
+        document.getElementById("inputItemPrice").value = selectedOption.dataset.price;
+    } else if (select.value === "custom") {
+        document.getElementById("inputItemName").value = "";
+        document.getElementById("inputItemPrice").value = "";
+    }
+}
+
+function closeAddItemModal() {
+    document.getElementById("addItemModal").style.display = "none";
+    activeEditOrderId = null;
+}
+
+function saveItemToPendingOrder() {
+    if (!activeEditOrderId) return;
+
+    const name = document.getElementById("inputItemName").value.trim();
+    const price = Number(document.getElementById("inputItemPrice").value) || 0;
+    const qty = Number(document.getElementById("inputItemQty").value) || 1;
+
+    if (!name || price <= 0 || qty <= 0) {
+        alert("Mohon isi nama pesanan, harga, dan jumlah dengan benar.");
+        return;
+    }
+
+    let pendingOrders = JSON.parse(localStorage.getItem("angkringan_pending_orders")) || [];
+    const orderIndex = pendingOrders.findIndex(o => o.id === activeEditOrderId);
+
+    if (orderIndex !== -1) {
+        const existingItem = pendingOrders[orderIndex].items.find(i => i.name.toLowerCase() === name.toLowerCase());
+
+        if (existingItem) {
+            existingItem.quantity += qty;
+        } else {
+            pendingOrders[orderIndex].items.push({
+                name: name,
+                price: price,
+                quantity: qty
+            });
+        }
+
+        // Hitung ulang total harga pesanan
+        pendingOrders[orderIndex].total = pendingOrders[orderIndex].items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+        localStorage.setItem("angkringan_pending_orders", JSON.stringify(pendingOrders));
+        closeAddItemModal();
+        renderPendingOrders();
+    }
 }
 
 /*
