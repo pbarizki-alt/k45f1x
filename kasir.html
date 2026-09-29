@@ -61,10 +61,19 @@
                             <span>Kembalian</span>
                             <span class="change-value" id="change">Rp0</span>
                         </div>
+
+                        <div class="payment-method">
+                            <label for="paymentMethod">Metode Pembayaran</label>
+                            <select id="paymentMethod">
+                                <option value="Cash">Cash</option>
+                                <option value="Dana">Dana</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="buttons">
                         <button class="btn btn-clear" onclick="clearOrder()">🗑️ Hapus</button>
+                        <button class="btn btn-confirm" onclick="confirmOrder()">📌 Konfirmasi</button>
                         <button class="btn btn-pay" onclick="finishTransaction()">💰 Bayar</button>
                     </div>
                 </div>

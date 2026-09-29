@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran Pesanan - Angkringan</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .pending-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .pending-card {
+            background: #1f1f1f;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #ff0000;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pending-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #444;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .pending-items {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .pending-item-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .pending-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff0000;
+            border-top: 1px solid #333;
+            padding-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .pending-payment label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .pending-payment input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ff0000;
+            background: #000;
+            color: #ff0000;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .pending-change-row {
+            display: flex;
+            justify-content: space-between;
+            background: #000;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn-pay-pending {
+            width: 100%;
+            background: #ff0000;
+            color: #000;
+            font-weight: bold;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        .btn-pay-pending:hover {
+            background: #cc0000;
+            color: #fff;
+        }
+
+        .btn-cancel-pending {
+            background: transparent;
+            color: #aaa;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: underline;
+            margin-top: 8px;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="home-nav" style="display: block;">
+    <button class="home-nav-btn" onclick="location.href='index.html'">⌂ Beranda</button>
+</nav>
+
+<section id="paymentPage" class="app-page" style="display: block;">
+    <header>
+        <h1>ꦔ꧀ꦭꦢꦺꦤꦶ ꦏꦤ꧀ꦛꦶ ꦲꦠꦶ, ꦔꦸꦤ꧀ꦝꦸꦃ ꦫꦼꦗꦼꦏꦶ</h1>
+        <p>JAWA JAWA JAWA JAWA JAWA JAWA</p>
+    </header>
+
+    <div class="container">
+        <h2 style="margin-bottom: 20px;">💳 Konfirmasi & Pembayaran Pesanan</h2>
+        <div id="pendingList" class="pending-grid">
+            <div class="empty">Tidak ada pesanan yang menunggu pembayaran.</div>
+        </div>
+    </div>
+</section>
+
+<script src="pembayaran.js"></script>
+</body>
+</html>

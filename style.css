@@ -212,6 +212,34 @@ header p {
     color: #666666;
 }
 
+.payment-method {
+    margin-top: 12px;
+}
+
+.payment-method label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+    color: #ff0000;
+}
+
+.payment-method select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ff0000;
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #ff0000;
+    cursor: pointer;
+    outline: none;
+}
+
+.payment-method select option {
+    background: #1f1f1f;
+    color: #ff0000;
+}
+
 .change {
     margin-top: 12px;
     padding: 15px;
@@ -228,8 +256,8 @@ header p {
 
 .buttons {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
     margin-top: 15px;
 }
 
@@ -246,6 +274,12 @@ header p {
     background: #1f1f1f;
     color: #ff0000;
 }
+
+.btn-confirm {
+    background: #1f1f1f;
+    color: #ff0000;
+}
+
 
 .btn-pay {
     background: #1f1f1f;
@@ -309,7 +343,7 @@ header p {
 
 .home-buttons {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 18px;
 }
 

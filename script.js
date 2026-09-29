@@ -209,6 +209,7 @@ SIMPAN TRANSAKSI KE LOCALSTORAGE FOR STATISTIK
 function saveTransactionToStorage(sourceName) {
     const now = new Date();
     const formattedDate = now.toLocaleDateString("id-ID") + " " + now.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' });
+    const paymentMethod = document.getElementById("paymentMethod") ? document.getElementById("paymentMethod").value : "Cash";
 
     const newTransaction = {
         id: Date.now(),
@@ -217,7 +218,8 @@ function saveTransactionToStorage(sourceName) {
         items: Object.values(order),
         total: calculateTotal(),
         payment: Number(document.getElementById("paymentInput").value) || 0,
-        change: (Number(document.getElementById("paymentInput").value) || 0) - calculateTotal()
+        change: (Number(document.getElementById("paymentInput").value) || 0) - calculateTotal(),
+        paymentMethod: paymentMethod // Menyimpan Metode Pembayaran (Cash / Dana)
     };
 
     const existingTransactions = JSON.parse(localStorage.getItem("angkringan_transactions")) || [];
@@ -282,6 +284,44 @@ function finishTransaction() {
 
     order = {};
     document.getElementById("paymentInput").value = "";
+    renderOrder();
+}
+
+/*
+==================================================
+KONFIRMASI PESANAN (KIRIM KE MENU PEMBAYARAN)
+==================================================
+*/
+function confirmOrder() {
+    const total = calculateTotal();
+
+    if (total === 0) {
+        alert("Belum ada pesanan untuk dikonfirmasi.");
+        return;
+    }
+
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString("id-ID") + " " + now.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' });
+    const paymentMethod = document.getElementById("paymentMethod") ? document.getElementById("paymentMethod").value : "Cash";
+
+    const pendingOrder = {
+        id: Date.now(),
+        date: formattedDate,
+        source: "Kasir Utama",
+        items: Object.values(order),
+        total: total,
+        paymentMethod: paymentMethod
+    };
+
+    const pendingList = JSON.parse(localStorage.getItem("angkringan_pending_orders")) || [];
+    pendingList.push(pendingOrder);
+    localStorage.setItem("angkringan_pending_orders", JSON.stringify(pendingList));
+
+    alert("Pesanan berhasil dikonfirmasi!");
+
+    order = {};
+    document.getElementById("paymentInput").value = "";
+    if (document.getElementById("paymentMethod")) document.getElementById("paymentMethod").value = "Cash";
     renderOrder();
 }
 

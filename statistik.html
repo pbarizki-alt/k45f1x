@@ -51,13 +51,58 @@
             border-color: #ff0000;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+        /* SECTION HEADER UNTUK STATISTIK */
+        .section-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #888;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
+        /* LAYOUT GRID STATISTIK */
+        .stats-grid-main {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .stats-grid-dana {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        /* STYLE KARTU DANA (NAVY DARK THEME) */
+        .summary-box-dana {
+            background: #1f1f1f;
+            border: 1px solid #1f1f1f;
+            border-left: 4px solid #1f1f1f;
+            padding: 15px;
+            border-radius: 10px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .summary-box-dana .summary-label {
+            color: #ff0000;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .summary-box-dana .summary-value {
+            margin-top: 5px;
+            font-weight: bold;
+            font-size: 22px;
+            color: #ff0000;
+        }
+
+        /* RIWAYAT TRANSACTION CARD */
         .history-card {
             background: #1f1f1f;
             border-radius: 10px;
@@ -160,8 +205,10 @@
             </div>
         </div>
 
-        <!-- RINGKASAN STATISTIK -->
-        <div class="stats-grid">
+        <!-- GROUP 1: RINGKASAN UTAMA -->
+        <div class="section-title">📊 Total Penjualan</div>
+        
+        <div class="stats-grid-main">
             <div class="card summary-box">
                 <div class="summary-label">Total Pendapatan</div>
                 <div class="summary-value" id="grandTotalIncome">Rp0</div>
@@ -177,6 +224,23 @@
             <div class="card summary-box">
                 <div class="summary-label">Pendapatan Rokok</div>
                 <div class="summary-value" id="rokokIncome">Rp0</div>
+            </div>
+        </div>
+
+        <!-- GROUP 2: RINGKASAN PEMBAYARAN DANA -->
+        <div class="section-title">Pembayaran DANA</div>
+        <div class="stats-grid-dana">
+            <div class="summary-box-dana">
+                <div class="summary-label">Total DANA</div>
+                <div class="summary-value" id="totalDana">Rp0</div>
+            </div>
+            <div class="summary-box-dana">
+                <div class="summary-label">DANA Kasir Utama</div>
+                <div class="summary-value" id="kasirDana">Rp0</div>
+            </div>
+            <div class="summary-box-dana">
+                <div class="summary-label">DANA Rokok</div>
+                <div class="summary-value" id="rokokDana">Rp0</div>
             </div>
         </div>
 

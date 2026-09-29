@@ -201,6 +201,7 @@ SIMPAN TRANSAKSI KE LOCALSTORAGE FOR STATISTIK
 function saveTransactionToStorage(sourceName) {
     const now = new Date();
     const formattedDate = now.toLocaleDateString("id-ID") + " " + now.toLocaleTimeString("id-ID", { hour: '2-digit', minute: '2-digit' });
+    const paymentMethod = document.getElementById("paymentMethod") ? document.getElementById("paymentMethod").value : "Cash";
 
     const newTransaction = {
         id: Date.now(),
@@ -209,7 +210,8 @@ function saveTransactionToStorage(sourceName) {
         items: Object.values(order),
         total: calculateTotal(),
         payment: Number(document.getElementById("paymentInput").value) || 0,
-        change: (Number(document.getElementById("paymentInput").value) || 0) - calculateTotal()
+        change: (Number(document.getElementById("paymentInput").value) || 0) - calculateTotal(),
+        paymentMethod: paymentMethod // Menyimpan Metode Pembayaran (Cash / Dana)
     };
 
     const existingTransactions = JSON.parse(localStorage.getItem("angkringan_transactions")) || [];

@@ -26,7 +26,7 @@ function getTxDateKey(tx) {
     return "";
 }
 
-// Format YYYY-MM-DD ke format lokal (contoh: 2026-09-28 -> 28/09/2026)
+// Format YYYY-MM-DD ke format lokal
 function getTodayString() {
     const today = new Date();
     const y = today.getFullYear();
@@ -60,6 +60,9 @@ function loadStatistics() {
     let grandTotal = 0;
     let kasirTotal = 0;
     let rokokTotal = 0;
+    let totalDana = 0;
+    let kasirDana = 0;
+    let rokokDana = 0;
 
     const historyList = document.getElementById("historyList");
     historyList.innerHTML = "";
@@ -70,6 +73,9 @@ function loadStatistics() {
         document.getElementById("totalTransactions").innerText = "0";
         document.getElementById("kasirIncome").innerText = rupiah(0);
         document.getElementById("rokokIncome").innerText = rupiah(0);
+        document.getElementById("totalDana").innerText = rupiah(0);
+        document.getElementById("kasirDana").innerText = rupiah(0);
+        document.getElementById("rokokDana").innerText = rupiah(0);
         return;
     }
 
@@ -79,11 +85,24 @@ function loadStatistics() {
 
         if (tx.source === "Kasir Utama") {
             kasirTotal += tx.total;
+            if (tx.paymentMethod === "Dana") {
+                kasirDana += tx.total;
+                totalDana += tx.total;
+            }
         } else if (tx.source === "Rokok") {
             rokokTotal += tx.total;
+            if (tx.paymentMethod === "Dana") {
+                rokokDana += tx.total;
+                totalDana += tx.total;
+            }
+        } else {
+            if (tx.paymentMethod === "Dana") {
+                totalDana += tx.total;
+            }
         }
 
         const sourceClass = tx.source === "Rokok" ? "rokok" : "kasir";
+        const methodText = tx.paymentMethod ? ` (${tx.paymentMethod})` : " (Cash)";
 
         let itemsHTML = "";
         tx.items.forEach((item) => {
@@ -107,18 +126,21 @@ function loadStatistics() {
             </div>
             <div class="history-footer">
                 <span>TOTAL</span>
-                <span>${rupiah(tx.total)}</span>
+                <span>${rupiah(tx.total)}${methodText}</span>
             </div>
         `;
 
         historyList.appendChild(card);
     });
 
-    // Ringkasan
+    // Ringkasan Tampilan
     document.getElementById("grandTotalIncome").innerText = rupiah(grandTotal);
     document.getElementById("totalTransactions").innerText = filteredTransactions.length;
     document.getElementById("kasirIncome").innerText = rupiah(kasirTotal);
     document.getElementById("rokokIncome").innerText = rupiah(rokokTotal);
+    document.getElementById("totalDana").innerText = rupiah(totalDana);
+    document.getElementById("kasirDana").innerText = rupiah(kasirDana);
+    document.getElementById("rokokDana").innerText = rupiah(rokokDana);
 }
 
 /*
